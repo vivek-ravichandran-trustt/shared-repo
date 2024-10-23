@@ -19,11 +19,11 @@ abstract class AccountOperations {
 //multiple inheritance not supported in java so
 //can be acheived from interface
 interface AccountManagement {
-    void change_id(int newId);
+    void changeId(int newId);
 
-    void change_name(String newname);
+    void changeName(String newname);
 
-    void change_age(int newage);
+    void changeAge(int newage);
 }
 
 //encapsulation(capsuling data like wrapping data & methods together as a single unit)
@@ -106,19 +106,19 @@ class BankAccount extends AccountOperations implements AccountManagement {
 
     //for all interface methods
     @Override
-    public void change_id(int newAccId) {
+    public void changeId(int newAccId) {
         this.accId = newAccId;
         System.out.println("the new ID is :" + accId);
     }
 
     @Override
-    public void change_age(int newage) {
+    public void changeAge(int newage) {
         this.age = newage;
         System.out.println("the updated age is: " + age);
     }
 
     @Override
-    public void change_name(String newname) {
+    public void changeName(String newname) {
         this.name = newname;
         System.out.println("the name is: " + name);
     }
