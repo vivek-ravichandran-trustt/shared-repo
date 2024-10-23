@@ -139,6 +139,7 @@ class Savings extends BankAccount{
         System.out.println("Interest Rate: "+interestRate);
     }
 }
+
 //main class
 public class Main {
     public static void main(String args[]) {
