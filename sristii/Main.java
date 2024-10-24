@@ -1,4 +1,6 @@
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -47,11 +49,12 @@ class BankAccount extends AccountOperations implements AccountManagement {
     // Implementing the abstract method from AccountOperations
     @Override
     //hiding the implementation here
+    //message format .format("id:{}",aaccId)
     public void accountSummary() {
-        System.out.println("id: " + accId);
-        System.out.println("name: " + name);
-        System.out.println("balance: " + balance);
-        System.out.println("age: " + age);
+        System.out.println(MessageFormat.format("id: {0}", accId));
+        System.out.println(MessageFormat.format("name: {0}", name));
+        System.out.println(MessageFormat.format("balance: {0}", balance));
+        System.out.println(MessageFormat.format("age: {0}", age));
     }
 
     //creating new method method for private method access
@@ -175,14 +178,29 @@ public class Main {
                 .map(BankAccount::getAccId)
                 .sorted()//takes out accountids
                 .collect(Collectors.toList());
+        //using for loop to handle ids
+        for(BankAccount i:accounts){
+            accountIds.add(i.getAccId());
+        }
+        Collections.sort(accountIds);//sorting account ids
         //using streams to store names
         List<String> accountOwners = accounts.stream()
                 .map(BankAccount::getName)
                 .collect(Collectors.toUnmodifiableList());
+        // Using for loop to get account owners
+        List<String> accountOwnerss = new ArrayList<>();
+        for (BankAccount account : accounts) {
+            accountOwnerss.add(account.getName());
+        }
         //lets try to sort out ages
         List<Integer> agesofall = accounts.stream()
                 .map(BankAccount::getAge)
                 .collect(Collectors.toUnmodifiableList());
+        // Using for loop to get ages
+        List<Integer> agesofalll = new ArrayList<>();
+        for (BankAccount account : accounts) {
+            agesofalll.add(account.getAge());
+        }
         //lets sum up the balances in the bank in total
         double balancestotal = accounts.stream()
                 .map(BankAccount::getBalance)
@@ -190,6 +208,7 @@ public class Main {
                 //instead use double use reduce()
                 //(classname:: methodname)
                 .reduce(0.0, Double::sum);
+
         System.out.println("total money in bank: " + balancestotal);
         System.out.println("ages of people: " + agesofall);
         System.out.println("names of ppl: " + accountOwners);
