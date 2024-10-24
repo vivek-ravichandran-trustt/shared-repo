@@ -68,6 +68,7 @@ abstract class Loan implements LoanOperations {
 
 //HomeLoan and CarLoan classes uses inheritance for code reusability.. 
 class HomeLoan extends Loan {
+    public static final double maxHomeLoan=20000;
     HomeLoan(double amount, double interest) {
         super(amount, interest);
     }
@@ -75,7 +76,7 @@ class HomeLoan extends Loan {
     //method overriding is used here as run time polymorphism
     //both home loan and car loan has specific implementation method and based on the class the method gets overridden..
     public void approveLoan() {
-        if (getAmount() > 20000) {
+        if (getAmount() > maxHomeLoan) {
             System.out.println("Home Loan not approved");
         } else {
             System.out.println("Home Loan approved");
@@ -84,12 +85,13 @@ class HomeLoan extends Loan {
 }
 
 class CarLoan extends Loan {
+    public static final double maxCarLoan=30000;
     CarLoan(double amount, double interest) {
         super(amount, interest);
     }
 
     public void approveLoan() {
-        if (getAmount() > 30000) {
+        if (getAmount() > maxCarLoan) {
             System.out.println("Car Loan not approved");
         } else {
             System.out.println("Car Loan approved");
