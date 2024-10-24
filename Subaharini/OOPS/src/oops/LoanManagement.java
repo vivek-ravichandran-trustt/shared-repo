@@ -1,7 +1,7 @@
 package oops;
 import java.util.Scanner;
 
-//Inteface is used here which allows different classes to implement the same method with their own implementations
+//Interface is used here which allows different classes to implement the same method with their own implementations
 
 interface LoanOperations {
     void applyForLoan();

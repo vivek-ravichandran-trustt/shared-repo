@@ -8,10 +8,11 @@ class Main {
         System.out.println(person.getName());
         System.out.println(person.getAge());
         person.setName("Leo");
-        person.setAge(89);
+        person.setAge(25);
         System.out.println(person.getName());
         System.out.println(person.getAge());
-                
+
+
     }
-        
+    
 }
