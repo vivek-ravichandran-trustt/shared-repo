@@ -51,6 +51,7 @@ class BankAccount extends AccountOperations implements AccountManagement {
     //hiding the implementation here
     //message format .format("id:{}",aaccId)
     public void accountSummary() {
+        //messageformat.format()
         System.out.println(MessageFormat.format("id: {0}", accId));
         System.out.println(MessageFormat.format("name: {0}", name));
         System.out.println(MessageFormat.format("balance: {0}", balance));

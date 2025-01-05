@@ -68,7 +68,11 @@ abstract class Loan implements LoanOperations {
 
 //HomeLoan and CarLoan classes uses inheritance for code reusability.. 
 class HomeLoan extends Loan {
+<<<<<<< HEAD
     public static final double maxHomeLoan=20000;
+=======
+	public static final double maxHomeLoan=20000;
+>>>>>>> origin/main
     HomeLoan(double amount, double interest) {
         super(amount, interest);
     }
@@ -85,7 +89,11 @@ class HomeLoan extends Loan {
 }
 
 class CarLoan extends Loan {
+<<<<<<< HEAD
     public static final double maxCarLoan=30000;
+=======
+	public static final double maxCarLoan=30000;
+>>>>>>> origin/main
     CarLoan(double amount, double interest) {
         super(amount, interest);
     }
