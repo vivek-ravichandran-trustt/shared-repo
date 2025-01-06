@@ -1,11 +1,12 @@
-package reportingService.creditCard.controller;
+package com.example.creditCardFinal.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import reportingService.creditCard.DTO.CreditCardReportDTO;
-import reportingService.creditCard.entity.CreditCardReport;
-import reportingService.creditCard.service.CreditCardServices;
+import com.example.creditCardFinal.DTO.CreditCardReportDTO;
+import com.example.creditCardFinal.entity.CreditCardReport;
+import com.example.creditCardFinal.service.CreditCardServices;
+import com.example.creditCardFinal.service.KafkaProducerService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,9 @@ public class CreditCardController {
 
     @Autowired
     private CreditCardServices service;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
     @GetMapping
     public List<CreditCardReportDTO> getAllReports() {
@@ -28,20 +32,13 @@ public class CreditCardController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CreditCardReportDTO> getReportById(@PathVariable int id) {
-        return service.getReportById(id)
-                .map(report -> new CreditCardReportDTO(
-                        report.getLeadRefNo(), report.getCustomer(), report.getApplicationStatus(),
-                        report.getAgentCode(), report.getCompanyCode(), report.getStatusUpdateDate(),
-                        report.getLeadSource(), report.getActivityType()))
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
     @PostMapping
     public CreditCardReportDTO createReport(@RequestBody CreditCardReport report) {
         CreditCardReport savedReport = service.saveReport(report);
+
+        // Send the saved report to Kafka
+        kafkaProducerService.sendMessage(savedReport.toString());
+
         return new CreditCardReportDTO(
                 savedReport.getLeadRefNo(), savedReport.getCustomer(), savedReport.getApplicationStatus(),
                 savedReport.getAgentCode(), savedReport.getCompanyCode(), savedReport.getStatusUpdateDate(),
@@ -66,23 +63,11 @@ public class CreditCardController {
         return ResponseEntity.ok(commission);
     }
 
-    @GetMapping("/totalLeadsByAgent")
-    public List<Object[]> getTotalLeadsProcessedByAgent() {
-        return service.getTotalLeadsProcessedByAgent();
-    }
-
-    @GetMapping("/leadsByStatus")
-    public List<Object[]> getLeadsWithSpecificCardStatuses() {
-        return service.getLeadsWithSpecificCardStatuses();
-    }
-
-    @GetMapping("/agentActivityCounts")
-    public List<Object[]> getAgentActivityCounts() {
-        return service.getAgentActivityCounts();
-    }
-
-    @GetMapping("/leadsBySource")
-    public List<Object[]> getLeadsBySource() {
-        return service.getLeadsBySource();
+    // Pagination and Sorting
+    @GetMapping("/all")
+    public List<CreditCardReportDTO> getAllReportsPaged(@RequestParam(defaultValue = "0") int page,
+                                                        @RequestParam(defaultValue = "10") int size,
+                                                        @RequestParam(defaultValue = "leadRefNo") String sortBy) {
+        return service.getAllReportsPaged(page, size, sortBy);
     }
 }

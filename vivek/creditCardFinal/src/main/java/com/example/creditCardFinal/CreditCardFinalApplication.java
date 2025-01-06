@@ -1,13 +1,13 @@
-package reportingService.creditCard;
+package com.example.creditCardFinal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CreditCardApplication {
+public class CreditCardFinalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CreditCardApplication.class, args);
+		SpringApplication.run(CreditCardFinalApplication.class, args);
 	}
 
 }

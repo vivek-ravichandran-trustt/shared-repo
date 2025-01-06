@@ -1,20 +1,33 @@
-package reportingService.creditCard.DTO;
+package com.example.creditCardFinal.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import java.time.LocalDate;
 
-public class CreditCardReportDTO {
+@Entity
+public class CreditCardReport {
 
-    private int leadRefNo;
-    private String customer;
-    private String applicationStatus;
-    private String agentCode;
-    private String companyCode;
-    private LocalDate statusUpdateDate; // New field for status update date
-    private String leadSource; // New field for lead source
-    private String activityType; // New field for activity type
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int leadRefNo; // Unique identifier for each report (Primary Key)
 
-    public CreditCardReportDTO(int leadRefNo, String customer, String applicationStatus, String agentCode,
-                               String companyCode, LocalDate statusUpdateDate, String leadSource, String activityType) {
+    private String customer; // Customer's name or identification
+    private String applicationStatus; // Status of the application (Pending, Activated, etc.)
+    private String agentCode; // Code representing the agent handling the application
+    private String companyCode; // Code for the company associated with the agent
+
+    @Column(name = "status_update_date")
+    private LocalDate statusUpdateDate; // Date when the status was last updated
+
+    private String leadSource; // Source of the lead (e.g., online, referral, etc.)
+
+    private String activityType; // Activity type for the report (e.g., Sell, Repair, Replace)
+
+    public CreditCardReport(int leadRefNo, String customer, String applicationStatus, String agentCode, String companyCode,
+                            LocalDate statusUpdateDate, String leadSource, String activityType) {
         this.leadRefNo = leadRefNo;
         this.customer = customer;
         this.applicationStatus = applicationStatus;
@@ -23,6 +36,10 @@ public class CreditCardReportDTO {
         this.statusUpdateDate = statusUpdateDate;
         this.leadSource = leadSource;
         this.activityType = activityType;
+    }
+
+    public CreditCardReport() {
+
     }
 
     public int getLeadRefNo() {
@@ -91,7 +108,7 @@ public class CreditCardReportDTO {
 
     @Override
     public String toString() {
-        return "CreditCardReportDTO{" +
+        return "CreditCardReport{" +
                 "leadRefNo=" + leadRefNo +
                 ", customer='" + customer + '\'' +
                 ", applicationStatus='" + applicationStatus + '\'' +

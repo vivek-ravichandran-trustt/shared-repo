@@ -1,6 +1,6 @@
-package reportingService.creditCard.repository;
+package com.example.creditCardFinal.repository;
 
-import reportingService.creditCard.entity.CreditCardReport;
+import com.example.creditCardFinal.entity.CreditCardReport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

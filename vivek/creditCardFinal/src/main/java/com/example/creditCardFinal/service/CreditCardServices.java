@@ -1,14 +1,17 @@
-package reportingService.creditCard.service;
+package com.example.creditCardFinal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import reportingService.creditCard.DTO.CreditCardReportDTO;
-import reportingService.creditCard.entity.CreditCardReport;
-import reportingService.creditCard.repository.CreditCardRepository;
+import com.example.creditCardFinal.DTO.CreditCardReportDTO;
+import com.example.creditCardFinal.entity.CreditCardReport;
+import com.example.creditCardFinal.repository.CreditCardRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CreditCardServices {
@@ -27,14 +30,17 @@ public class CreditCardServices {
     }
 
     public List<CreditCardReport> getAllReports() {
+
         return repository.findAll();
     }
 
     public Optional<CreditCardReport> getReportById(Integer id) {
+
         return repository.findById(id);
     }
 
     public CreditCardReport saveReport(CreditCardReport report) {
+
         return repository.save(report);
     }
 
@@ -54,18 +60,32 @@ public class CreditCardServices {
     }
 
     public List<Object[]> getTotalLeadsProcessedByAgent() {
+
         return repository.findTotalLeadsProcessedByAgent();
     }
 
     public List<Object[]> getLeadsWithSpecificCardStatuses() {
+
         return repository.findLeadsWithSpecificCardStatuses();
     }
 
     public List<Object[]> getAgentActivityCounts() {
+
         return repository.findAgentActivityCounts();
     }
 
     public List<Object[]> getLeadsBySource() {
+
         return repository.findLeadsBySource();
+    }
+    public List<CreditCardReportDTO> getAllReportsPaged(int page, int size, String sortBy) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(sortBy));
+        List<CreditCardReport> reports = repository.findAll(pageRequest).getContent();
+        return reports.stream()
+                .map(report -> new CreditCardReportDTO(
+                        report.getLeadRefNo(), report.getCustomer(), report.getApplicationStatus(),
+                        report.getAgentCode(), report.getCompanyCode(), report.getStatusUpdateDate(),
+                        report.getLeadSource(), report.getActivityType()))
+                .collect(Collectors.toList());
     }
 }
