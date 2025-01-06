@@ -24,7 +24,6 @@ public class KafkaProducerService {
     }
 
 	public void sendReportToKafka(CreditCardController report) {
-		// TODO Auto-generated method stub
 		
 	}
 }
